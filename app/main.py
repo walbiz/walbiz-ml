@@ -1,15 +1,16 @@
 from flask import Flask, render_template, jsonify
 import csv
 
+
 app = Flask(__name__)
 
 @app.route('/')
 def home():
     return render_template('index.html')
 
-@app.route('/get_recomendation', methods=['GET'])
+@app.route('/franchises', methods=['GET'])
 def display_csv():
-    csv_data = read_csv('export_walbiz.csv')
+    csv_data = read_csv('./dataset/franchise_walbiz.csv')
     return jsonify({'csv_data': csv_data})
 
 def read_csv(file_path):
@@ -19,6 +20,5 @@ def read_csv(file_path):
     return data
 
 
-
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=8080)
