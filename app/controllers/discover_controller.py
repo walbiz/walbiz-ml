@@ -19,7 +19,7 @@ def initialize_data():
 
     return embeddings, sentences, model, df
 
-@app.route('/franchises/discover', methods=['GET'])
+@app.route('/franchises/discover', methods=['GET, POST'])
 def recommend():
     embeddings, sentences, model, df = initialize_data()
 

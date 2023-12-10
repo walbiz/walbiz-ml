@@ -6,6 +6,8 @@ colorama==0.4.6
 filelock==3.13.1
 Flask==3.0.0
 fsspec==2023.12.1
+gevent==23.9.1
+greenlet==3.0.2
 huggingface-hub==0.19.4
 idna==3.6
 importlib-metadata==7.0.0
@@ -41,5 +43,8 @@ transformers==4.35.2
 typing_extensions==4.9.0
 tzdata==2023.3
 urllib3==2.1.0
+waitress==.1.2
 Werkzeug==3.0.1
 zipp==3.17.0
+zope.event==5.0
+zope.interface==6.1
