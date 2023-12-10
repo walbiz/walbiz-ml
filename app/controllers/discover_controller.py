@@ -6,22 +6,27 @@ import pandas as pd
 
 app = Flask(__name__)
 
-with open('./app/models/embedding.pkl', 'rb') as file:
-    embeddings = pickle.load(file)
+def initialize_data():
+    with open('./app/models/embedding.pkl', 'rb') as file:
+        embeddings = pickle.load(file)
 
-with open('./app/models/sentences.pkl', 'rb') as file:
-    sentences = pickle.load(file)
+    with open('./app/models/sentences.pkl', 'rb') as file:
+        sentences = pickle.load(file)
 
-model = SentenceTransformer('all-MiniLM-L6-v2')
-csv_dataset_path = './app/dataset/franchise_walbiz.csv'
-df = pd.read_csv(csv_dataset_path)
+    model = SentenceTransformer('all-MiniLM-L6-v2')
+    csv_dataset_path = './app/dataset/franchise_walbiz.csv'
+    df = pd.read_csv(csv_dataset_path)
+
+    return embeddings, sentences, model, df
 
 @app.route('/franchises/discover', methods=['POST'])
 def recommend():
+    embeddings, sentences, model, df = initialize_data()
+
     data = request.get_json()
     franchise_you_like = data['discover']
     cosine_scores = util.cos_sim(embeddings, model.encode(franchise_you_like))
-    top_similar_franchise = torch.topk(cosine_scores, dim=0, k=5, sorted=True)
+    top_similar_franchise = torch.topk(cosine_scores, dim=0, k=5, sorted=False)
     
     recommendations = []
     for i in top_similar_franchise.indices:
