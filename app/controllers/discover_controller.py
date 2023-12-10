@@ -34,14 +34,12 @@ def recommend():
         franchise_info = df.iloc[i.item()]
         
         recommendation_dict = {
-            'id': str(franchise_info['franchise_id']),
-            'name': franchise_info['franchise_name'],
-            'type': franchise_info['franchise_type'],
-            'category': franchise_info['franchise_category'],
-            'costs': str(franchise_info['costs']),
-            'logoImageUrl': franchise_info['logo_image_url'],
-            'imageUrl': franchise_info['image_url']
-            # Add more key-value pairs as needed for other information
+            "id": row["franchise_id"],
+            "name": row["franchise_name"],
+            "type": row["franchise_type"],
+            "category": row["franchise_category"],
+            "costs": row["costs"],
+            "logoImageUrl": row["franchise_href"],
         }
         recommendations.append(recommendation_dict)
     
