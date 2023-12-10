@@ -19,13 +19,13 @@ def initialize_data():
 
     return embeddings, sentences, model, df
 
-@app.route('/franchises/discover', methods=['POST'])
+@app.route('/franchises/discover', methods=['GET'])
 def recommend():
     embeddings, sentences, model, df = initialize_data()
 
     data = request.get_json()
     franchise_you_like = data['discover']
-    cosine_scores = util.cos_sim(embeddings, model.encode(franchise_you_like))
+    cosine_scores = util.cos_sim(embeddings, model.encode(franchise_you_likes))
     top_similar_franchise = torch.topk(cosine_scores, dim=0, k=5, sorted=False)
     
     recommendations = []
