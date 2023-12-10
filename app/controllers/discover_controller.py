@@ -25,23 +25,22 @@ def recommend():
 
     data = request.get_json()
     franchise_you_like = data['discover']
-    cosine_scores = util.cos_sim(embeddings, model.encode(franchise_you_likes))
-    top_similar_franchise = torch.topk(cosine_scores, dim=0, k=5, sorted=False)
+    cosine_scores = util.cos_sim(embeddings, model.encode(franchise_you_like))
+    top_similar_franchise = torch.topk(cosine_scores, dim=0, k=5, sorted=True)
     
     recommendations = []
     for i in top_similar_franchise.indices:
-        # Use the index i to retrieve information from the DataFrame
-        franchise_info = df.iloc[i.item()]
+        row = df.iloc[i.item()]
         
         recommendation_dict = {
-            "id": row["franchise_id"],
+            "id": str(row["franchise_id"]),
             "name": row["franchise_name"],
             "type": row["franchise_type"],
             "category": row["franchise_category"],
-            "costs": row["costs"],
-            "logoImageUrl": row["franchise_href"],
+            "costs": str(row["costs"]),
+            "logoImageUrl": row["logo_image_url"],
         }
         recommendations.append(recommendation_dict)
     
-    response = {'franchises': recommendations}
-    return json.dumps(response, indent=2)
+    json_data = json.dumps({'franchises': recommendations}, indent=2, sort_keys=False)
+    return Response(json_data, content_type='application/json')

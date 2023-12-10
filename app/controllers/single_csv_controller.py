@@ -6,9 +6,9 @@ app = Flask(__name__)
 @app.route('/franchises/<int:franchise_id>', methods=['GET'])
 def display_single_csv(franchise_id):
     csv_data = read_csv('./app/dataset/franchise_walbiz.csv')
-    selected_row = find_row_by_id(csv_data, franchise_id)
+    row = find_row_by_id(csv_data, franchise_id)
 
-    if selected_row:
+    if row:
         formatted_row = {
             "id" : row["franchise_id"],
             "name": row["franchise_name"],

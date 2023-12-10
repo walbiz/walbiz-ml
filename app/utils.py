@@ -15,7 +15,7 @@ def format_csv_data(csv_data):
             "type": row["franchise_type"],
             "category": row["franchise_category"],
             "costs": row["costs"],
-            "logoImageUrl": row["franchise_href"],
+            "logoImageUrl": row["logo_image_url"],
         }
         formatted_data.append(formatted_row)
     return formatted_data
